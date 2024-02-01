@@ -1,6 +1,9 @@
 public class Couche {
     public Neurone[] neurones;
 
+    /* La couche va initialiser autant de neuronnes qu'il y a de nbNeuronnes
+    nbEntrée va spécifier le nombre de neuronnes dans la couche précédente ce qui va spécifier le nombre d'entrée(s)
+     */
     public Couche(int nbNeurones, int nbEntrees) {
         neurones = new Neurone[nbNeurones];
         for (int i = 0; i < nbNeurones; i++) {
@@ -8,7 +11,7 @@ public class Couche {
         }
     }
 
-    // Méthode pour obtenir les sorties de la couche
+    /* Méthode pour obtenir les sorties de la couche */
     public double[] getSorties(double[] entrees) {
         double[] sorties = new double[neurones.length];
         for (int i = 0; i < neurones.length; i++) {

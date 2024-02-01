@@ -1,7 +1,8 @@
 public class ReseauNeurones {
     private Couche[] couches;
 
-    // Constructeur
+    /* Initialisation d'un réseau de neuronne
+    * il est composé de plusieurs couches qui contiennent eux même des neuronnes*/
     public ReseauNeurones(int[] architecture) {
         couches = new Couche[architecture.length];
 
@@ -12,7 +13,7 @@ public class ReseauNeurones {
         }
     }
 
-    // Méthode pour obtenir les sorties du réseau
+    /* Méthode pour obtenir les sorties du réseau */
     public double[] getSorties(double[] entrees) {
         double[] sorties = entrees;
 
@@ -23,15 +24,17 @@ public class ReseauNeurones {
         return sorties;
     }
 
-    // Méthode d'entraînement avec rétropropagation du gradient
+    /* Méthode d'entraînement avec rétropropagation du gradient
+    * Le gradient est utilisé pour ajuster les poids et le biais du neurone de manière
+    * à minimiser l'erreur entre les sorties du réseau et les sorties attendues. */
     public void entrainement(double[] entrees, double[] cibles, double tauxApprentissage) {
-        // Passe avant (calcul des sorties)
         double[] sorties = getSorties(entrees);
 
         // Calcul de l'erreur sur la couche de sortie
         double[] erreursSortie = new double[sorties.length];
         for (int i = 0; i < sorties.length; i++) {
             erreursSortie[i] = cibles[i] - sorties[i];
+            System.out.println("l'erreur de sortie : "+erreursSortie[i]);
         }
 
         // Rétropropagation du gradient à travers les couches
@@ -42,10 +45,13 @@ public class ReseauNeurones {
             for (int j = 0; j < couche.neurones.length; j++) {
                 double sommeErreurPonderee = 0;
 
-                // Vérifier la taille des tableaux
+                /* Permet de vérifier que la retropropagation du gradient n'est effectuée que pour les couches
+                qui ne sont pas dernière couche du réseau. */
                 if (couches.length > i + 1 && couches[i + 1].neurones.length > 0) {
                     for (int k = 0; k < Math.min(couche.neurones[j].poids.length, erreursSortie.length); k++) {
+
                         sommeErreurPonderee += couche.neurones[j].poids[k] * erreursSortie[k];
+                        System.out.println("somme erreur pondérée : "+sommeErreurPonderee);
                     }
                 }
 

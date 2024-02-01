@@ -1,3 +1,4 @@
+import java.util.*;
 public class Neurone {
     public double[] poids;
     private double biais;
@@ -5,12 +6,14 @@ public class Neurone {
     private double[] entrees; // Nouvel attribut pour stocker les entrées lors de l'activation
 
     public Neurone(int nbEntrees) {
-        // Initialiser les poids et le biais de manière aléatoire
         poids = new double[nbEntrees];
+        Random random = new Random();
+        double ecartType = 1.0 / Math.sqrt(nbEntrees);  // Correction pour une initialisation Glorot
         for (int i = 0; i < nbEntrees; i++) {
-            poids[i] = Math.random();
+            poids[i] = random.nextGaussian() * ecartType;
+            System.out.println(poids[i]);
         }
-        biais = Math.random();
+        biais = random.nextGaussian() * ecartType;
     }
 
     // Méthode d'activation (sigmoid)
